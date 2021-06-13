@@ -11,7 +11,6 @@ namespace VCStest.Page
 {
     public class IkeaLikeProductPage : BasePage
     {
-
         private const string addressUrl = "https://www.ikea.lt/lt/products/miegamasis/patalyne/antklodziu-uzvalkalai/varbracka-antklodes-uzv-ir-2-pagalv-uzv-smeline-balta-art-90412596";
 
         private IWebElement okCookieButton => Driver.FindElement(By.Id("CybotCookiebotDialogBodyLevelButtonAccept"));
@@ -41,7 +40,10 @@ namespace VCStest.Page
 
         public void CheckResult()
         {
-            Assert.IsTrue("(1)".Equals(resultElement.Text), "Liked item does not equal 1");
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(_driver => resultElement.Text.Contains("1"));
+            Assert.IsTrue(resultElement.Text.Contains("1"), $"Liked item does not equal 1, item text (resultElement.Text)");
+            //Assert.IsTrue("(1)".Equals(resultElement.Text), "Liked item does not equal 1");
         }
     }
 }
